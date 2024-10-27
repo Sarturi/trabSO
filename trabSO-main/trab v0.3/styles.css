@@ -1,0 +1,106 @@
+body {
+    font-family: Arial, sans-serif;
+    background-color: #f4f4f4;
+    text-align: center;
+    margin: 0;
+    padding: 20px;
+}
+
+.memory-container {
+    border: 2px solid #333;
+    height: 200px;
+    width: 100%;
+    max-width: 600px;
+    margin: 20px auto;
+    display: flex;
+    justify-content: flex-start;
+    align-items: flex-end;
+}
+
+.page {
+    color: white;
+    height: 100%; /* O processo ocupa toda a altura da caixa de RAM */
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin-right: 0px; /* Espaço entre processos */
+    cursor: pointer;
+}
+
+.page:hover{
+    color: rgb(0, 0, 0);
+    
+}
+
+
+
+.process-container {
+    display: flex;
+    justify-content: center;
+    margin-top: 20px;
+}
+
+.process1 {
+    background-color: #28a745;
+    color: white;
+    width: 50px;
+    height: 30px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin: 0 5px;
+    cursor: pointer;
+}
+.process2 {
+    background-color: #28a745;
+    color: white;
+    width: 50px;
+    height: 30px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin: 0 5px;
+    cursor: pointer;
+}
+.process3 {
+    background-color: #28a745;
+    color: white;
+    width: 50px;
+    height: 30px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin: 0 5px;
+    cursor: pointer;
+}
+.process4 {
+    background-color: #28a745;
+    color: white;
+    width: 50px;
+    height: 30px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin: 0 5px;
+    cursor: pointer;
+}
+.process5 {
+    background-color: #28a745;
+    color: white;
+    width: 50px;
+    height: 30px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin: 0 5px;
+    cursor: pointer;
+}
+
+.process:hover {
+    background-color: #218838;
+}
+
+#message {
+    margin-top: 20px;
+    color: red;
+}
