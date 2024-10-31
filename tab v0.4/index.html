@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Gerenciador de Memória</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <h1>Gerenciador de Memória</h1>
+
+    <div>
+        <label for="process-size">Tamanho do Processo:</label>
+        <input type="number" id="process-size" min="1" max="32" value="1">
+        <button id="add-process">Adicionar Processo</button>
+    </div>
+    
+    <div class="memory">
+        <h2>Memória RAM (32)</h2>
+        <div id="ram" class="memory-container"></div>
+    </div>
+
+    <div class="disk">
+        <h2>Disco Rígido</h2>
+        <div id="hd" class="memory-container"></div>
+    </div>
+    
+    <div id="message"></div>
+    
+    <script src="script.js"></script>
+</body>
+</html>

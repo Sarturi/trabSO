@@ -1,0 +1,39 @@
+body {
+    font-family: Arial, sans-serif;
+    background-color: #f4f4f4;
+    text-align: center;
+    margin: 0;
+    padding: 20px;
+}
+
+.memory-container, .disk .memory-container {
+    border: 2px solid #333;
+    height: 200px;
+    width: 100%;
+    max-width: 600px;
+    margin: 20px auto;
+    display: flex;
+    justify-content: flex-start;
+    align-items: flex-end;
+}
+
+.page {
+    color: white;
+    height: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin-right: 0px;
+    cursor: pointer;
+    padding: 10px; /* Adiciona padding interno */
+    box-sizing: border-box;
+}
+
+.page:hover {
+    color: rgb(0, 0, 0);
+}
+
+#message {
+    margin-top: 20px;
+    color: red;
+}
