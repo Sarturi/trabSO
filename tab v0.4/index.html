@@ -10,11 +10,15 @@
     <h1>Gerenciador de Memória</h1>
 
     <div>
+        <label for="process-name">Nome do Processo:</label>
+        <input type="text" id="process-name" placeholder="Ex: Proc1">
+        
         <label for="process-size">Tamanho do Processo:</label>
         <input type="number" id="process-size" min="1" max="32" value="1">
+        
         <button id="add-process">Adicionar Processo</button>
     </div>
-    
+
     <div class="memory">
         <h2>Memória RAM (32)</h2>
         <div id="ram" class="memory-container"></div>

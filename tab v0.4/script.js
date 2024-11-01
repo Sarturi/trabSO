@@ -2,93 +2,95 @@ const ram = document.getElementById("ram");
 const hd = document.getElementById("hd");
 const message = document.getElementById("message");
 const addProcessButton = document.getElementById("add-process");
+const processNameInput = document.getElementById("process-name");
 const processSizeInput = document.getElementById("process-size");
 
 let pagesInRam = [];
 let pagesInHd = [];
-const maxPages = 32;
+const maxPages = 32; 
 
-// Adiciona um processo à RAM
 function addProcess() {
+    const processName = processNameInput.value.trim();
     const pageSize = parseInt(processSizeInput.value);
     const currentSize = getCurrentSize(pagesInRam);
 
+    if (!processName) {
+        message.textContent = "Por favor, insira um nome para o processo.";
+        return;
+    }
+
     if (currentSize + pageSize <= maxPages) {
-        const processId = `P${pagesInRam.length + 1}`;
-        pagesInRam.push(`${processId}(${pageSize})`);
+        const color = getColorForProcess(pagesInRam.length + pagesInHd.length);
+        const process = { id: processName, size: pageSize, color: color };
+        pagesInRam.push(process);
         renderRam();
         message.textContent = "";
+        // processNameInput.value = ""; // Limpa o campo do nome do processo
     } else {
         message.textContent = `Memória cheia! Você já usou ${currentSize} unidades, o limite é 32.`;
     }
 }
 
-// Remove um processo da RAM
-function removeProcess(process, indexToRemove) {
-    pagesInRam = pagesInRam.filter((_, index) => index !== indexToRemove);
+
+function removeProcess(index) {
+    const process = pagesInRam[index];
+    pagesInRam.splice(index, 1);
     renderRam();
-    message.textContent = `Processo ${process} removido da RAM!`;
+    message.textContent = `Processo ${process.id} removido da RAM!`;
 }
 
-// Move um processo para o HD
-function moveToHd(process, index) {
-    pagesInRam.splice(index, 1);
+function moveToHd(index) {
+    const process = pagesInRam.splice(index, 1)[0];
     pagesInHd.push(process);
     renderRam();
     renderHd();
-    message.textContent = `Processo ${process} movido para o HD!`;
+    message.textContent = `Processo ${process.id} movido para o HD!`;
 }
 
-// Move um processo para a RAM
-function moveToRam(process, index) {
-    pagesInHd.splice(index, 1);
-    pagesInRam.push(process);
-    renderRam();
-    renderHd();
-    message.textContent = `Processo ${process} movido para a RAM!`;
+function moveToRam(index) {
+    const process = pagesInHd.splice(index, 1)[0];
+    const currentSize = getCurrentSize(pagesInRam);
+
+    if (currentSize + process.size <= maxPages) {
+        pagesInRam.push(process);
+        renderRam();
+        renderHd();
+        message.textContent = `Processo ${process.id} movido para a RAM!`;
+    } else {
+        message.textContent = `Memória cheia! Não foi possível mover ${process.id} para a RAM.`;
+    }
 }
 
-// Remove um processo do HD
-function removeFromHd(process, indexToRemove) {
-    pagesInHd = pagesInHd.filter((_, index) => index !== indexToRemove);
-    renderHd();
-    message.textContent = `Processo ${process} removido do HD!`;
-}
-
-// Renderiza a RAM
 function renderRam() {
     ram.innerHTML = "";
-    pagesInRam.forEach((page, index) => {
-        const div = createProcessDiv(page, () => moveToHd(page, index));
+    pagesInRam.forEach((process, index) => {
+        const div = createProcessDiv(process, () => moveToHd(index));
         ram.appendChild(div);
     });
 }
 
-// Renderiza o HD
 function renderHd() {
     hd.innerHTML = "";
-    pagesInHd.forEach((page, index) => {
-        const div = createProcessDiv(page, () => moveToRam(page, index));
+    pagesInHd.forEach((process, index) => {
+        const div = createProcessDiv(process, () => moveToRam(index));
         hd.appendChild(div);
     });
 }
 
-// Cria um elemento de processo
-function createProcessDiv(page, onClick) {
+function createProcessDiv(process, onClick) {
     const div = document.createElement("div");
     div.classList.add("page");
-    div.textContent = page;
+    div.textContent = `${process.id} (${process.size})`;
+    div.style.backgroundColor = process.color; // Atribui a cor específica do processo
+    div.style.width = `${(process.size / maxPages) * 100}%`; // Define a largura proporcional do processo
     div.onclick = onClick;
-    div.style.backgroundColor = getColorForProcess(pagesInRam.length + pagesInHd.length);
     return div;
 }
 
-// Calcula o tamanho atual
 function getCurrentSize(pages) {
-    return pages.reduce((sum, page) => sum + parseInt(page.match(/\((\d+)\)/)[1]), 0);
+    return pages.reduce((sum, page) => sum + page.size, 0);
 }
 
-// Gera cores diferentes com base no índice
 function getColorForProcess(index) {
     const colors = [
         '#007bff', // Azul
@@ -100,13 +102,10 @@ function getColorForProcess(index) {
         '#fd7e14', // Laranja
         '#6610f2'  // Roxo Escuro
     ];
-    return colors[index % colors.length]; // Garante que o índice rode sobre as cores disponíveis
+    return colors[index % colors.length];
 }
 
-
-// Adiciona o evento ao botão de adicionar processo
 addProcessButton.addEventListener("click", addProcess);
 
-// Inicializa a visualização da RAM e HD
 renderRam();
 renderHd();
